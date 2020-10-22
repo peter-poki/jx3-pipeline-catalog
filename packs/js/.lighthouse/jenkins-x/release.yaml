@@ -260,14 +260,14 @@ spec:
           image: node:14
           name: build-npm-install
           resources: {}
-        - args:
-          - CI=true DISPLAY=:99 npm test
-          command:
-          - /bin/sh
-          - -c
-          image: node:14
-          name: build-npm-test
-          resources: {}
+        # - args:
+        #   - CI=true DISPLAY=:99 npm test
+        #   command:
+        #   - /bin/sh
+        #   - -c
+        #   image: node:14
+        #   name: build-npm-test
+        #   resources: {}
         - args:
           - npm run build
           command:
