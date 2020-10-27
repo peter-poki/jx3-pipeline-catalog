@@ -20,5 +20,9 @@ COPY /nginx.conf /etc/nginx/conf.d/default.conf
 COPY /dist /usr/share/nginx/html
 COPY /entrypoint.sh /entrypoint.sh
 RUN dos2unix ./entrypoint.sh && chmod +x /entrypoint.sh
+
+ENV PORT 80
+EXPOSE 80
+
 ENTRYPOINT [ "/entrypoint.sh" ]
 # CMD ["nginx", "-g", "daemon off;"]
