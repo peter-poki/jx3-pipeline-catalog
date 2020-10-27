@@ -234,7 +234,7 @@ spec:
           - /bin/bash
           - -c
           image: mcr.microsoft.com/dotnet/core/sdk:3.1
-          name: dotnet restore
+          name: dotnet-restore
           resources: {}
         - args:
           - dotnet publish -c Release -o output
@@ -242,7 +242,7 @@ spec:
           - /bin/bash
           - -c
           image: mcr.microsoft.com/dotnet/core/sdk:3.1
-          name: dotnet publish
+          name: dotnet-publish
           resources: {}
         - args:
           - source .jx/variables.sh && cp /tekton/creds-secrets/tekton-container-registry-auth/.dockerconfigjson /kaniko/.docker/config.json && /kaniko/executor $KANIKO_FLAGS --cache=true --cache-dir=/workspace --context=/workspace/source --dockerfile=/workspace/source/Dockerfile --destination=$DOCKER_REGISTRY/$DOCKER_REGISTRY_ORG/$APP_NAME:$VERSION --cache-repo=$DOCKER_REGISTRY/$DOCKER_REGISTRY_ORG/cache
