@@ -197,22 +197,6 @@ spec:
           resources: {}
           workingDir: /workspace
         - args:
-          - -c
-          - jx step next-version --use-git-tag-only --tag
-          command:
-          - /bin/sh
-          image: gcr.io/jenkinsxio-labs-private/jxl:0.0.136
-          name: tag-with-new-version
-          resources: {}
-        - args:
-          - '[ -d /builder/home ] || mkdir -p /builder && ln -s /tekton/home /builder/home'
-          command:
-          - /bin/sh
-          - -c
-          image: gcr.io/jenkinsxio/builder-jx:2.1.142-761
-          name: setup-builder-home
-          resources: {}
-        - args:
           - step
           - git
           - merge
@@ -227,6 +211,22 @@ spec:
           - jx
           image: gcr.io/jenkinsxio/builder-jx:2.1.142-761
           name: git-merge
+          resources: {}
+        - args:
+          - -c
+          - jx step next-version --use-git-tag-only --tag
+          command:
+          - /bin/sh
+          image: gcr.io/jenkinsxio-labs-private/jxl:0.0.136
+          name: next-version
+          resources: {}
+        - args:
+          - '[ -d /builder/home ] || mkdir -p /builder && ln -s /tekton/home /builder/home'
+          command:
+          - /bin/sh
+          - -c
+          image: gcr.io/jenkinsxio/builder-jx:2.1.142-761
+          name: setup-builder-home
           resources: {}
         - args:
           - gitops
@@ -251,6 +251,14 @@ spec:
           - -c
           image: mcr.microsoft.com/dotnet/core/sdk:3.1
           name: dotnet-publish
+          resources: {}
+        - args:
+          - -c
+          - filename=$(awk -F "/" '{print $NF}'<<< $(find . -name "*.csproj" -print)); echo  ${filename%.*} > output/__assemblyname
+          command:
+          - /bin/bash
+          image: mcr.microsoft.com/dotnet/core/sdk:3.1
+          name: get-assembly-name
           resources: {}
         - args:
           - source .jx/variables.sh && cp /tekton/creds-secrets/tekton-container-registry-auth/.dockerconfigjson /kaniko/.docker/config.json && /kaniko/executor $KANIKO_FLAGS --cache=true --cache-dir=/workspace --context=/workspace/source --dockerfile=/workspace/source/Dockerfile --destination=$DOCKER_REGISTRY/$DOCKER_REGISTRY_ORG/$APP_NAME:$VERSION --cache-repo=$DOCKER_REGISTRY/$DOCKER_REGISTRY_ORG/cache

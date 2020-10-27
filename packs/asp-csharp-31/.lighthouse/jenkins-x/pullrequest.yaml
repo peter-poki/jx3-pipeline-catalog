@@ -245,6 +245,14 @@ spec:
           name: dotnet-publish
           resources: {}
         - args:
+          - -c
+          - filename=$(awk -F "/" '{print $NF}'<<< $(find . -name "*.csproj" -print)); echo  ${filename%.*} > output/__assemblyname
+          command:
+          - /bin/bash
+          image: mcr.microsoft.com/dotnet/core/sdk:3.1
+          name: get-assembly-name
+          resources: {}
+        - args:
           - source .jx/variables.sh && cp /tekton/creds-secrets/tekton-container-registry-auth/.dockerconfigjson /kaniko/.docker/config.json && /kaniko/executor $KANIKO_FLAGS --cache=true --cache-dir=/workspace --context=/workspace/source --dockerfile=/workspace/source/Dockerfile --destination=$DOCKER_REGISTRY/$DOCKER_REGISTRY_ORG/$APP_NAME:$VERSION --cache-repo=$DOCKER_REGISTRY/$DOCKER_REGISTRY_ORG/cache
           command:
           - /busybox/sh
