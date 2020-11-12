@@ -19,24 +19,12 @@ spec:
               memory: 512Mi
           workingDir: /workspace/source
         steps:
-        - image: gcr.io/jenkinsxio/builder-go
-          name: next-version
+        - image: gcr.io/jenkinsxio-labs-private/jxl:0.0.136
+          name: tag-with-new-version
           resources: {}
           script: |
             #!/usr/bin/env bash
-            jx step next-version --filename package.json
-        - image: gcr.io/jenkinsxio/builder-go
-          name: update-version
-          resources: {}
-          script: |
-            #!/usr/bin/env bash
-            jx step tag --version $(cat VERSION) --no-apply
-        - image: gcr.io/jenkinsxio/builder-go
-          name: tag-version
-          resources: {}
-          script: |
-            #!/usr/bin/env bash
-            jx step tag --version $(cat VERSION)
+            jx step next-version --use-git-tag-only --tag
         - image: gcr.io/jenkinsxio/jx-cli:3.0.705
           name: jx-variables
           resources: {}
