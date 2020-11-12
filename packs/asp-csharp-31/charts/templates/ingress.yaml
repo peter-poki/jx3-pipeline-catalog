@@ -1,3 +1,4 @@
+{{- $serviceName := .Values.service.name -}}
 {{- if and (.Values.jxRequirements.ingress.domain) (not .Values.knativeDeploy) }}
 apiVersion: {{ .Values.jxRequirements.ingress.apiVersion }}
 kind: Ingress
@@ -16,6 +17,16 @@ metadata:
   name: {{ .Values.service.name }}
 spec:
   rules:
+{{- if .Values.ingress.hosts}}
+{{- range .Values.ingress.hosts }}
+  - http:
+      paths:
+      - backend:
+          serviceName: {{ $serviceName }}
+          servicePort: 80
+    host: {{ . }}
+{{- end }}
+{{- else }}
   - http:
       paths:
       - backend:
@@ -25,6 +36,7 @@ spec:
         path: "/{{ .Release.Namespace }}/hook"
 {{- else if .Values.jxRequirements.ingress.domain }}
     host: {{ .Values.service.name }}{{ .Values.jxRequirements.ingress.namespaceSubDomain }}{{ .Values.jxRequirements.ingress.domain }}
+{{- end }}
 {{- end }}
 {{- if .Values.jxRequirements.ingress.tls.enabled }}
   tls:
