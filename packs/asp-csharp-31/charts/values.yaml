@@ -84,11 +84,15 @@ serviceAccount:
   enabled: true
   name: ""
   annotations: {}
-#  annotations:
-#    iam.gke.io/gcp-service-account: my-sa-in-gke
+  #  annotations:
+  #    iam.gke.io/gcp-service-account: my-sa-in-gke
   labels: {}
 #  labels:
 #    my-custom-label: value
+
+sql:
+  enabled: false
+  # name: solvedio:europe-west3:my-instance
 
 # values we use from the `jx-requirements.yml` file if we are using helmfile and helm 3
 jxRequirements:
