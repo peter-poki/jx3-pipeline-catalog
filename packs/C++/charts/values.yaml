@@ -59,7 +59,7 @@ resources:
   requests:
     cpu: 200m
     memory: 128Mi
-probePath: /
+probePath: /health
 livenessProbe:
   initialDelaySeconds: 60
   periodSeconds: 10
@@ -84,8 +84,8 @@ serviceAccount:
   enabled: true
   name: ""
   annotations: {}
-#  annotations:
-#    iam.gke.io/gcp-service-account: my-sa-in-gke
+  #  annotations:
+  #    iam.gke.io/gcp-service-account: my-sa-in-gke
   labels: {}
 #  labels:
 #    my-custom-label: value
