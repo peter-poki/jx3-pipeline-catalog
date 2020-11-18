@@ -5,7 +5,7 @@ metadata:
 upstream:
     type: git
     git:
-        commit: e2d100682a512a950e4c34918d64b53ae4d988bf
-        repo: https://github.com/peter-poki/jx3-pipeline-catalog
-        directory: /packs/asp-js-ui-14/charts
+        commit: 32e5b38dc265781b9d14c777c88f88a0a948bfb0
+        repo: https://github.com/jenkins-x/jx3-gitops-template
+        directory: /charts/preview
         ref: master

@@ -15,7 +15,6 @@ jx:
 env:
 # - name: VERSION
 #   value: {{ .Chart.Version }}
-# two values
 
 # enable this flag to use knative serve to deploy the app
 knativeDeploy: false
