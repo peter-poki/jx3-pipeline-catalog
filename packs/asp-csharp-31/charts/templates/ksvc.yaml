@@ -19,12 +19,7 @@ spec:
         - image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-          - name: VERSION
-            value: {{ .Chart.Version }}
-{{- range $pkey, $pval := .Values.env }}
-          - name: {{ $pkey }}
-            value: {{ quote $pval }}
-{{- end }}
+{{ toYaml .Values.env | indent 10 }}
           livenessProbe:
             httpGet:
               path: {{ .Values.livenessProbe.probePath | default .Values.probePath }}

@@ -13,6 +13,8 @@ jx:
 
 # define environment variables here as a map of key: value
 env:
+  # - name: VERSION
+  #   value: {{ .Chart.Version }}
 
 # enable this flag to use knative serve to deploy the app
 knativeDeploy: false
