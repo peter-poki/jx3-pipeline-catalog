@@ -25,7 +25,7 @@ spec:
           value: "true"
         - name: VALIDATE_ALL_CODEBASE
           value: "true"
-        - name: VALIDATE_TYPESCRIPT_ES
+        - name: VALIDATE_TYPESCRIPT_STANDARD
           value: "true"
       image: github/super-linter:v3.13.1
       name: lint
