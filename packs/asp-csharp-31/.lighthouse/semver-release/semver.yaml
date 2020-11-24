@@ -1,0 +1,21 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: semver
+  annotations:
+    "lighthouse.jenkins-x.io/prependStepsURL": "https://raw.githubusercontent.com/jenkins-x/jx3-pipeline-catalog/master/tasks/git-clone/git-clone-pr.yaml"
+spec:
+  stepTemplate:
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    workingDir: /workspace/source
+  steps:
+  - script: |
+      #!/usr/bin/env sh
+      last_message="$(git log -1 --pretty=%B)"
+      echo $last_message
+      case $last_message in "fix:"*) echo "Contains SemVer release info" && return 0 ;; "feat:"*) echo "Contains SemVer release info" && return 0 ;; *)  echo "Missing SemVer release info" && return 0  ;; esac
+    image: alpine/git
+    name: semver-check

@@ -1,0 +1,11 @@
+apiVersion: kpt.dev/v1alpha1
+kind: Kptfile
+metadata:
+  name: semver-release
+upstream:
+  type: git
+  git:
+    commit: 7fed36a0983d1a569e796477b2cf1f893b7ba36f
+    repo: https://github.com/peter-poki/jx3-pipeline-catalog
+    directory: tasks/semver-release
+    ref: master
