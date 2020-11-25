@@ -8,8 +8,8 @@ spec:
   stepTemplate:
     resources:
       requests:
-        cpu: 400m
-        memory: 512Mi
+        cpu: 200m
+        memory: 128Mi
     workingDir: /workspace/source
   steps:
     - env:
@@ -18,7 +18,7 @@ spec:
         - name: DISABLE_ERRORS
           value: "true"
         - name: OUTPUT_DETAILS
-          value: "detailed"
+          value: "simple"
         - name: OUTPUT_FORMAT
           value: "tap"
         - name: RUN_LOCAL
