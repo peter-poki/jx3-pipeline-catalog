@@ -8,29 +8,33 @@ spec:
   stepTemplate:
     resources:
       requests:
-        cpu: 200m
+        cpu: 100m
         memory: 128Mi
     workingDir: /workspace/source
   steps:
     - env:
-        - name: DEFAULT_WORKSPACE
-          value: "."
-        - name: DISABLE_ERRORS
+        - name: DOTNET_CLI_TELEMETRY_OPTOUT
           value: "true"
-        - name: OUTPUT_DETAILS
-          value: "simple"
-        - name: OUTPUT_FORMAT
-          value: "tap"
-        - name: RUN_LOCAL
-          value: "true"
-        - name: VALIDATE_ALL_CODEBASE
-          value: "true"
-        - name: VALIDATE_CSHARP
-          value: "true"
-      image: github/super-linter:v3.13.1
+      image: poki712/linter-dotnet-format
+      script: |
+        #!/usr/bin/env bash
+        dotnet help;
+        echo "Starting linting";
+        dotnet format --check >> linter-output.txt;
+        echo "Linting finished";
       name: lint
     - script: |
         #!/usr/bin/env bash
-        jx-tap tap -d super-linter.report
-      image: gcr.io/jenkinsxio/jx-tap:latest
+        lines_count=$(wc -l linter-output.txt | awk '{print $1}')
+        (
+          if (( lines_count > 2)); then
+            echo "There are problems with linting";
+            jx-gitops pr comment -c "<p>There are LINT problems, see: </p><code>$(cat linter-output.txt)</code>";
+            exit 1;
+          else
+            echo "There are NO problems with linting".
+            exit 0;
+          fi
+        )
+      image: gcr.io/jenkinsxio/jx-gitops:0.0.439
       name: pr-comment
