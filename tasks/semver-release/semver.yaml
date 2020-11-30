@@ -14,7 +14,7 @@ spec:
   steps:
   - script: |
       #!/usr/bin/env sh
-      last_message="$(git log -1 --pretty=%B)"
+      last_message="$(git log --no-merges -1 --pretty=%B)"
       echo $last_message
       (
       case $last_message in
