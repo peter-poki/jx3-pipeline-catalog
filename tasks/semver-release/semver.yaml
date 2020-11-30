@@ -15,7 +15,7 @@ spec:
   - script: |
       #!/usr/bin/env sh
       last_message="$(git log --no-merges -1 --pretty=%B)"
-      echo $last_message
+      echo "Last commit message is: $last_message."
       (
       case $last_message in
         "fix:"*) echo "Contains SemVer release info" && exit 0 ;;
