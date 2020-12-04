@@ -33,12 +33,12 @@ spec:
           script: |
             #!/usr/bin/env sh
             jx gitops variables
-        - image: python:3.6.12-alpine
-          name: build-python-unittest
-          resources: {}
-          script: |
-            #!/bin/sh
-            python -m unittest
+        # - image: python:3.6.12-alpine
+        #   name: build-python-unittest
+        #   resources: {}
+        #   script: |
+        #     #!/bin/sh
+        #     python -m unittest
         - image: gcr.io/kaniko-project/executor:debug-v1.3.0
           name: build-container-build
           resources: {}
