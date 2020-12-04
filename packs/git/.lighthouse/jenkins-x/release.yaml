@@ -19,13 +19,15 @@ spec:
               memory: 600Mi
           workingDir: /workspace/source
         steps:
-        - image: gcr.io/jenkinsxio-labs-private/jxl:0.0.136
-          name: tag-version
+        - image: gcr.io/jenkinsxio/jx-release-version:1.0.42
+          name: next-version
           resources: {}
           script: |
             #!/usr/bin/env bash
-            jx step next-version --use-git-tag-only --tag
-        - image: gcr.io/jenkinsxio/jx-boot:3.0.738
+            VERSION=$(jx-release-version)
+            echo $VERSION > VERSION
+
+        - image: gcr.io/jenkinsxio/jx-boot:3.0.755
           name: jx-variables
           resources: {}
           script: |
