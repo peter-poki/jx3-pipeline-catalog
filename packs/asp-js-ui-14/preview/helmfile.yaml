@@ -1,3 +1,7 @@
+environments:
+  default:
+    values:
+    - jx-values.yaml
 releases:
 - chart: '../charts/{{ requiredEnv "APP_NAME" }}'
   name: preview

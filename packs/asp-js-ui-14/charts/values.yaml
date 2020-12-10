@@ -13,8 +13,6 @@ jx:
 
 # define environment variables here as a map of key: value
 env:
-# - name: VERSION
-#   value: {{ .Chart.Version }}
 
 # enable this flag to use knative serve to deploy the app
 knativeDeploy: false
@@ -86,8 +84,8 @@ serviceAccount:
   enabled: true
   name: ""
   annotations: {}
-  #  annotations:
-  #    iam.gke.io/gcp-service-account: my-sa-in-gke
+#  annotations:
+#    iam.gke.io/gcp-service-account: my-sa-in-gke
   labels: {}
 #  labels:
 #    my-custom-label: value
