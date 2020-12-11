@@ -37,6 +37,27 @@ spec:
           script: |
             #!/bin/sh
             npm install
+        - image: node:14-alpine
+          name: build-npm-lint-first
+          resources: {}
+          script: |
+            #!/bin/sh
+            npm run lint
+        - image: gcr.io/jenkinsxio/jx-gitops:0.0.439
+          script: |
+            #!/usr/bin/env bash
+            lines_count=$(wc -l linter-output.txt | awk '{print $1}')
+            (
+              if (( lines_count > 0)); then
+                echo "There are problems with linting";
+                jx-gitops pr comment -c "<p>There are LINT problems, see: </p><code>$(cat linter-output.txt)</code>";
+                exit 1;
+              else
+                echo "There are NO problems with linting".
+                exit 0;
+              fi
+            )
+          name: build-npm-lint-second
         # - image: node:14-alpine
         #   name: build-npm-test
         #   resources: {}
